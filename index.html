@@ -18,64 +18,76 @@
         <h1>Weather Dashboard</h1>
     </div>
 
-    <nav class = "container">Search Bar</nav>
+    <nav class = "container">
+        <h2>Search Bar</h2>
+    </nav>
 
-    <!-- Paste Data here -->
     <div id = "weatherBox">
+        <div>
+            <h3 id = "cityName"><span class = "date-0 day"></h3>
+            <p id = "temp0"></p>
+            <p id = "wind0"></p>
+            <p id = "hum0"></p>
+            <p id = "uv0"></p>
 
+        </div>
+    </div>
+
+    <div id = "futureBox">
         <div class="card" style="width:400px">
             <div class="card-body">
-              <h4 id = "date-0-title"></h4>
-              <img id = "date-0-img">
-              <p class = "date-0-temp"></p>
-              <p class = "date-0-wind"></p>
-              <p class = "date-0-hum"></p>
+                <h4 class = "date-1 date">
+                <img class = "date-1 img">
+                <p class = "date-1 temp"></p>
+                <p class = "date-1 wind"></p>
+                <p class = "date-1 hum"></p>
             </div>
         </div>
 
         <div class="card" style="width:400px">
             <div class="card-body">
-              <h4 id = "date-1-title"></h4>
-              <img id = "date-1-img">
-              <p class = "date-1-temp"></p>
-              <p class = "date-1-wind"></p>
-              <p class = "date-1-hum"></p>
+                <h4 class = "date-2 date">
+                <img class = "date-2 wImg">
+                <p class = "date-2 temp"></p>
+                <p class = "date-2 wind"></p>
+                <p class = "date-2 hum"></p>
             </div>
         </div>
 
         <div class="card" style="width:400px">
             <div class="card-body">
-              <h4 id = "date-2-title"></h4>
-              <img id = "date-2-img">
-              <p class = "date-2-temp"></p>
-              <p class = "date-2-wind"></p>
-              <p class = "date-2-hum"></p>
+                <h4 class = "date-3 date">
+                <img class = "date-3 wImg">
+                <p class = "date-3 temp"></p>
+                <p class = "date-3 wind"></p>
+                <p class = "date-3 hum"></p>
             </div>
         </div>
 
         <div class="card" style="width:400px">
             <div class="card-body">
-              <h4 id = "date-3-title"></h4>
-              <img id = "date-3-img">
-              <p class = "date-3-temp"></p>
-              <p class = "date-3-wind"></p>
-              <p class = "date-3-hum"></p>
+                <h4 class = "date-4 date">
+                <img class = "date-4 wImg">
+                <p class = "date-4 temp"></p>
+                <p class = "date-4 wind"></p>
+                <p class = "date-4 hum"></p>
             </div>
         </div>
 
         <div class="card" style="width:400px">
             <div class="card-body">
-              <h4 id = "date-4-title"></h4>
-              <img id = "date-4-img">
-              <p class = "date-4-temp"></p>
-              <p class = "date-4-wind"></p>
-              <p class = "date-4-hum"></p>
+                <h4 class = "date-5 date">
+                <img class = "date-5 wImg">
+                <p class = "date-5 temp"></p>
+                <p class = "date-5 wind"></p>
+                <p class = "date-5 hum"></p>
             </div>
         </div>
 
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src = "assets/js/script.js"></script>
 </body>
 </html>
