@@ -1,11 +1,16 @@
 let oAPIKey = "&appid=64fad7b0711ab718bafff9d92159faea";
 let inputEl = $("input[id = 'searchBar']")
+let cityList = []
 
 function getCity(str){
-    let city = str.toLowerCase()
-    let C = str.charAt(0).toUpperCase()
-    let City = C + city.slice(1)
-    return City
+    let strArr = str.split(' ');
+    let cityArr = []
+    for (let i = 0; i < strArr.length; i++) {
+        let city = strArr[i].toLowerCase();
+        let C = strArr[i].charAt(0).toUpperCase();
+        cityArr.push(C + city.slice(1))
+    }
+    return cityArr.join(' ')
 }
 
 function getCurrentWeather (cityName) {
@@ -18,12 +23,15 @@ function getCurrentWeather (cityName) {
         method: 'GET', 
         }).then(function (response) {
 
+        $('#title').html(response.name + ": " + currentDay.format('dddd, DD/MM/YYYY'))
         $('#temp0').html("Current Temperature: " + response.main.temp.toFixed(1) + ' &#8451')
         $('#wind0').html("Current Wind Speed: " + (response.wind.speed * 3.6).toFixed(1) + ' km/h')
         $('#hum0').html("Relative Humidity: " + response.main.humidity + '%')
 
         lg = response.coord.lon
         la = response.coord.lat
+
+        buttonMaker(response.name)
 
         $('#uv0').html("UV Index: " + 0)
 
@@ -47,7 +55,6 @@ function getForecast (cityName) {
         url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + oAPIKey + '&units=metric',
         method: 'GET', 
         }).then(function (response) {
-            console.log(response)
 
             // Each list item shows the forecast every 3 hours, up to 4 days and 21 hours in the future
             // To ensure that the following function works, the application takes the forecast for each day 3 hours earlier than the same time for the current day
@@ -70,42 +77,70 @@ function getForecast (cityName) {
     })
 }
 
+function buttonMaker(cName){
+
+    if(!cityList.includes(cName)){
+       
+        cityList.push(cName)
+        let lCity = $('<li>');
+        lCity.text(cName);
+        lCity.addClass('cityName');
+        lCity.attr('id', cName);
+        $('#cityList').append(lCity); 
+
+        let cities = document.querySelectorAll(".cityName");
+        for (let i = 0; i < cities.length; i ++) {
+        cities[i].setAttribute('onclick', 'findCity ($(this).attr("id"))');
+        }
+
+        localStorage.setItem('cityList', JSON.stringify(cityList))
+    }
+
+}
+
+function initButtonMaker(){
+    for (let i = 0; i < cityList.length; i++) {
+        let lCity = $('<li>');
+        lCity.text(cityList[i]);
+        lCity.addClass('cityName');
+        lCity.attr('id', cityList[i]);
+        $('#cityList').append(lCity); 
+    }
+    let cities = document.querySelectorAll(".cityName");
+        for (let i = 0; i < cities.length; i ++) {
+        cities[i].setAttribute('onclick', 'findCity ($(this).attr("id"))');
+        }
+}
+
 function searchCity(event) {
     event.preventDefault();
 
     let newCity = getCity(inputEl.val());
-
-    $('#title').html(inputEl.val() + ": " + currentDay.format('dddd, DD/MM/YYYY'))
     getCurrentWeather(newCity);
     getForecast(newCity);
-    
-    let lCity = $('<li>');
-    lCity.text(newCity);
-    lCity.addClass('cityName')
-    lCity.attr('id', newCity)
-    $('#cityList').append(lCity);
+
     inputEl.val('')
 
-    let cities = document.querySelectorAll(".cityName")
-    for (let i = 0; i < cities.length; i ++) {
-        cities[i].setAttribute('onclick', 'findCity ($(this).attr("id"))');        
-    }
 }
 
 function findCity (cityName){
-    console.log(cityName);
     getCurrentWeather(cityName);
     getForecast(cityName);
 }
-
-
 
 $('#search').on('submit', searchCity)
 let currentDay = dayjs()
 
 function init(){
-    let storedCityList = []
-    storedCityList = [1,1]
+    let storedCityList = JSON.parse(localStorage.getItem("cityList"))
+    if (storedCityList !== null) {
+        cityList = storedCityList;
+        initButtonMaker();
+    } else {
+        cityList = []
+    }
+
+    
 }
 
 init()
