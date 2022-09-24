@@ -74,23 +74,38 @@ function searchCity(event) {
     event.preventDefault();
 
     let newCity = getCity(inputEl.val());
+
+    $('#title').html(inputEl.val() + ": " + currentDay.format('dddd, DD/MM/YYYY'))
     getCurrentWeather(newCity);
     getForecast(newCity);
     
     let lCity = $('<li>');
-    lCity.text(inputEl.val());
+    lCity.text(newCity);
+    lCity.addClass('cityName')
+    lCity.attr('id', newCity)
     $('#cityList').append(lCity);
     inputEl.val('')
 
+    let cities = document.querySelectorAll(".cityName")
+    for (let i = 0; i < cities.length; i ++) {
+        cities[i].setAttribute('onclick', 'findCity ($(this).attr("id"))');        
+    }
 }
 
+function findCity (cityName){
+    console.log(cityName);
+    getCurrentWeather(cityName);
+    getForecast(cityName);
+}
+
+
+
 $('#search').on('submit', searchCity)
-
-
-
 let currentDay = dayjs()
 
-$('#title').html("Toronto" + " " + currentDay.format('dddd, DD/MM/YYYY'))
+function init(){
+    let storedCityList = []
+    storedCityList = [1,1]
+}
 
-getCurrentWeather('Toronto')
-getForecast('Toronto')
+init()

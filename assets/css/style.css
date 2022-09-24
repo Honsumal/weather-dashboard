@@ -4,3 +4,13 @@
     --swan:#d9eded;
     --givry:#f9d7c5;
 }
+
+
+.cityName{
+    padding: 5px;
+    margin: 10px;
+    width: fit-content;
+    border-radius: 10px;
+    color: var(--givry);
+    background-color: var(--ultra);
+}
