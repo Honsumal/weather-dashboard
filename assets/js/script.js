@@ -1,5 +1,5 @@
 let oAPIKey = "&appid=64fad7b0711ab718bafff9d92159faea";
-
+let inputEl = $("input[id = 'searchBar']")
 
 function getCity(str){
     let city = str.toLowerCase()
@@ -25,18 +25,20 @@ function getCurrentWeather (cityName) {
         lg = response.coord.lon
         la = response.coord.lat
 
+        $('#uv0').html("UV Index: " + 0)
+
     //Used OpenUV.io API because Open Weather Map's UV API has been retired
-        $.ajax({
-            method: 'GET',
-            dataType: 'json',
-            beforeSend: function(request) {
-                request.setRequestHeader('x-access-token', '0b6b6b1c744740aa9ca32506ff111886');
-            },
-            url: 'https://api.openuv.io/api/v1/uv?lat=' + la + '&lng=' + lg,
+        // $.ajax({
+        //     method: 'GET',
+        //     dataType: 'json',
+        //     beforeSend: function(request) {
+        //         request.setRequestHeader('x-access-token', '4d9ae09605283ed3041fcb758ab23175');
+        //     },
+        //     url: 'https://api.openuv.io/api/v1/uv?lat=' + la + '&lng=' + lg,
     
-        }).then(function(response){
-            $('#uv0').html("UV Index: " + response.result.uv.toFixed(1))
-        });
+        // }).then(function(response){
+        //     $('#uv0').html("UV Index: " + response.result.uv.toFixed(1))
+        // });
     })
 
 }
@@ -68,17 +70,27 @@ function getForecast (cityName) {
     })
 }
 
+function searchCity(event) {
+    event.preventDefault();
 
+    let newCity = getCity(inputEl.val());
+    getCurrentWeather(newCity);
+    getForecast(newCity);
+    
+    let lCity = $('<li>');
+    lCity.text(inputEl.val());
+    $('#cityList').append(lCity);
+    inputEl.val('')
+
+}
+
+$('#search').on('submit', searchCity)
 
 
 
 let currentDay = dayjs()
 
 $('#title').html("Toronto" + " " + currentDay.format('dddd, DD/MM/YYYY'))
-
-
-
-
 
 getCurrentWeather('Toronto')
 getForecast('Toronto')
