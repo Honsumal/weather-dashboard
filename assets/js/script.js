@@ -1,6 +1,8 @@
 let oAPIKey = "&appid=64fad7b0711ab718bafff9d92159faea";
 let inputEl = $("input[id = 'searchBar']")
 let cityList = []
+let img = document.getElementsByClassName("wImg")
+let img0 = document.getElementById('wImg0')
 
 // Modifies entry to make it easier to make the ajax request
 function getCity(str){
@@ -11,24 +13,27 @@ function getCity(str){
         let C = strArr[i].charAt(0).toUpperCase();
         cityArr.push(C + city.slice(1))
     }
+    console.log(cityArr.join(' '))
     return cityArr.join(' ')
 }
 
 // Requests Open Weather Map to retrieve current weather at specified location
 function getCurrentWeather (cityName) {
-    let lg = 0
-    let la = 0
 
     // Gets temperature, wind speed, humidity, and coordinates of the selected city
     $.ajax({
         url: 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + oAPIKey + '&units=metric',
-        method: 'GET', 
+        method: 'GET',
+        error: function(request, status, error) {
+            alert("Sorry! Your search seems to be invalid. Please try again!\nHint: Make sure to add in spaces between words in the city name.");
+        }
         }).then(function (response) {
 
         $('#title').html(response.name + ": " + currentDay.format('dddd, DD/MM/YYYY'))
         $('#temp0').html("Current Temperature: " + response.main.temp.toFixed(1) + ' &#8451')
         $('#wind0').html("Current Wind Speed: " + (response.wind.speed * 3.6).toFixed(1) + ' km/h')
         $('#hum0').html("Relative Humidity: " + response.main.humidity + '%')
+        $('#wImg0').attr('src', "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
 
         buttonMaker(response.name)
 
@@ -59,6 +64,12 @@ function getForecast (cityName) {
 
             $('.hum').each(function() {
                 $(this).html("Humidity: " + response.list[($(this).attr('date') * 8 - 1)].main.humidity.toFixed(0) + '%')
+            })
+
+            //Code for Weather Icon
+
+            $('.wImg').each(function() {
+                $(this).attr('src', "http://openweathermap.org/img/w/" + response.list[($(this).attr('date') * 8 - 1)].weather[0].icon + ".png")
             })
 
     })
@@ -104,6 +115,11 @@ function initButtonMaker(){
 // Active when a city is entered into search bar
 function searchCity(event) {
     event.preventDefault();
+    for (let i = 0; i < img.length; i++) {
+        img[i].setAttribute('style', 'display: shown')
+    }
+    
+    img0.setAttribute('style', 'display: shown')
 
     let newCity = getCity(inputEl.val());
     getCurrentWeather(newCity);
@@ -115,6 +131,11 @@ function searchCity(event) {
 
 // Provides functionality to each city button
 function findCity (cityName){
+    for (let i = 0; i < img.length; i++) {
+        img[i].setAttribute('style', 'display: shown')
+    }
+    img0.setAttribute('style', 'display: shown')
+
     getCurrentWeather(cityName);
     getForecast(cityName);
 }
@@ -133,7 +154,16 @@ function init(){
         cityList = []
     }
 
-    
+    for (let i = 0; i < img.length; i++) {
+
+        if(!img[i].getAttribute('src')){
+            img[i].setAttribute('style', 'display: none')
+        } 
+    }
+
+    if(!img0.getAttribute('src')){
+        img0.setAttribute('style', 'display: none')
+    }
 }
 
 init()

@@ -19,7 +19,7 @@ h4{
 
 h1 {
     text-align: center;
-    font-size: 48px;
+    font-size: 36px;
 }
 
 h2 {
@@ -29,7 +29,10 @@ h2 {
 
 .jumbotron {
     background-color: var(--char);
-    color: var(--swan)
+    color: var(--swan);
+    height: fit-content;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 
@@ -54,7 +57,7 @@ input {
 .container {
 
     height:fit-content;
-    min-height: 457px;
+    min-height: 542px;
     width: fit-content;
     float:left;
     background-color: var(--char);
