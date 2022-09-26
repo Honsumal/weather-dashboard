@@ -6,6 +6,11 @@
 }
 
 
+h3,
+h4{
+    font-weight: bold;
+}
+
 .cityName{
     padding: 5px;
     margin: 10px;
@@ -13,4 +18,36 @@
     border-radius: 10px;
     color: var(--givry);
     background-color: var(--ultra);
+}
+
+.container {
+    position: bottom;
+    height:800px;
+    width: 300px;
+}
+
+main {
+    width: 65%;
+    display: inline-block;
+}
+
+#cityList{
+    width: 250px;
+}
+
+nav{
+    float: left;
+}
+
+#weatherBox{
+    float: center;
+    font-size: 36px;
+}
+
+#futureBox{
+    display: inline-block;
+}
+
+button {
+    padding: 5px;
 }

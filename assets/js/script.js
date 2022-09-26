@@ -2,6 +2,7 @@ let oAPIKey = "&appid=64fad7b0711ab718bafff9d92159faea";
 let inputEl = $("input[id = 'searchBar']")
 let cityList = []
 
+// Modifies entry to make it easier to make the ajax request
 function getCity(str){
     let strArr = str.split(' ');
     let cityArr = []
@@ -13,6 +14,7 @@ function getCity(str){
     return cityArr.join(' ')
 }
 
+// Requests Open Weather Map to retrieve current weather at specified location
 function getCurrentWeather (cityName) {
     let lg = 0
     let la = 0
@@ -28,28 +30,13 @@ function getCurrentWeather (cityName) {
         $('#wind0').html("Current Wind Speed: " + (response.wind.speed * 3.6).toFixed(1) + ' km/h')
         $('#hum0').html("Relative Humidity: " + response.main.humidity + '%')
 
-        lg = response.coord.lon
-        la = response.coord.lat
-
         buttonMaker(response.name)
 
-        $('#uv0').html("UV Index: " + 0)
-
-    //Used OpenUV.io API because Open Weather Map's UV API has been retired
-        // $.ajax({
-        //     method: 'GET',
-        //     dataType: 'json',
-        //     beforeSend: function(request) {
-        //         request.setRequestHeader('x-access-token', '4d9ae09605283ed3041fcb758ab23175');
-        //     },
-        //     url: 'https://api.openuv.io/api/v1/uv?lat=' + la + '&lng=' + lg,
-    
-        // }).then(function(response){
-        //     $('#uv0').html("UV Index: " + response.result.uv.toFixed(1))
-        // });
     })
 
 }
+
+//Requests Open Weather Map to retrieve future weather at specified location
 function getForecast (cityName) {
     $.ajax({
         url: 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + oAPIKey + '&units=metric',
@@ -63,20 +50,21 @@ function getForecast (cityName) {
             })
 
             $('.temp').each(function() {
-                $(this).html("Forecast Temperature: " + response.list[($(this).attr('date') * 8 - 1)].main.temp.toFixed(1) + ' &#8451')
+                $(this).html("Temperature: " + response.list[($(this).attr('date') * 8 - 1)].main.temp.toFixed(1) + ' &#8451')
             })
 
             $('.wind').each(function() {
-                $(this).html("Forecast Wind Speed: " + (response.list[($(this).attr('date') * 8 - 1)].wind.speed * 3.6).toFixed(1) + ' km/h')
+                $(this).html("Wind Speed: " + (response.list[($(this).attr('date') * 8 - 1)].wind.speed * 3.6).toFixed(1) + ' km/h')
             })
 
             $('.hum').each(function() {
-                $(this).html("Forecast Humidity: " + response.list[($(this).attr('date') * 8 - 1)].main.humidity.toFixed(0) + '%')
+                $(this).html("Humidity: " + response.list[($(this).attr('date') * 8 - 1)].main.humidity.toFixed(0) + '%')
             })
 
     })
 }
 
+// Makes each of the entered cities a clickable button that acts as a shortcut to that city's weather data
 function buttonMaker(cName){
 
     if(!cityList.includes(cName)){
@@ -98,6 +86,7 @@ function buttonMaker(cName){
 
 }
 
+// Makes the buttons at initialization based on locally stored city names
 function initButtonMaker(){
     for (let i = 0; i < cityList.length; i++) {
         let lCity = $('<li>');
@@ -112,6 +101,7 @@ function initButtonMaker(){
         }
 }
 
+// Active when a city is entered into search bar
 function searchCity(event) {
     event.preventDefault();
 
@@ -123,14 +113,17 @@ function searchCity(event) {
 
 }
 
+// Provides functionality to each city button
 function findCity (cityName){
     getCurrentWeather(cityName);
     getForecast(cityName);
 }
 
+// Provides functionality to the search bar
 $('#search').on('submit', searchCity)
 let currentDay = dayjs()
 
+// Loads local storage on startup
 function init(){
     let storedCityList = JSON.parse(localStorage.getItem("cityList"))
     if (storedCityList !== null) {
