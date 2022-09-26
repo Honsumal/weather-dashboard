@@ -6,9 +6,25 @@
 }
 
 
+h1,
+h2,
 h3,
 h4{
     font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    font-size: 48px;
+}
+
+.jumbotron {
+    background-color: var(--char);
+    color: var(--swan)
+}
+
+body {
+    background-color: var(--ultra);
 }
 
 .cityName{
@@ -20,34 +36,63 @@ h4{
     background-color: var(--ultra);
 }
 
+input {
+    width: 130px;
+}
+
 .container {
-    position: bottom;
-    height:800px;
-    width: 300px;
+    position: relative;
+    height:fit-content;
+    width: fit-content;
+    float:left;
+    background-color: var(--givry);
 }
 
 main {
-    width: 65%;
+    width: 80%;
     display: inline-block;
+    margin-left: 30px;
+
 }
 
-#cityList{
-    width: 250px;
-}
-
-nav{
-    float: left;
-}
-
-#weatherBox{
+#weatherBox {
     float: center;
     font-size: 36px;
+    margin-bottom: 50px;
+    background-color: var(--swan);
+    border-radius: 5px;
+    padding-bottom: 20px;
 }
 
-#futureBox{
-    display: inline-block;
+#futureBox .card {
+    background-color: var(--swan);
 }
 
 button {
     padding: 5px;
+}
+
+
+@media screen and (max-width: 1153px) {
+    main {
+        margin-left: 15px;
+    }
+    
+}
+
+@media screen and (max-width: 1076px) {
+    .container{
+        width: 170px;
+    }
+
+    main {
+        width: 65%;
+        margin-left: 15px;
+    }
+}
+
+@media screen and (max-width: 529px) {
+    main {
+        width: 50%;
+    }
 }
