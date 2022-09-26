@@ -5,6 +5,10 @@
     --givry:#f9d7c5;
 }
 
+body {
+    background-color: var(--ultra);
+
+}
 
 h1,
 h2,
@@ -18,22 +22,29 @@ h1 {
     font-size: 48px;
 }
 
+h2 {
+    font-size: 24px;
+    color: var(--swan);
+}
+
 .jumbotron {
     background-color: var(--char);
     color: var(--swan)
 }
 
-body {
-    background-color: var(--ultra);
-}
 
 .cityName{
     padding: 5px;
     margin: 10px;
     width: fit-content;
     border-radius: 10px;
-    color: var(--givry);
-    background-color: var(--ultra);
+    color: var(--char);
+    background-color: var(--swan);
+}
+
+.cityName:hover {
+    box-shadow: inset 0px 0px 8px var(--givry), 0 0 15px var(--givry);
+    cursor: pointer;
 }
 
 input {
@@ -41,11 +52,14 @@ input {
 }
 
 .container {
-    position: relative;
+
     height:fit-content;
+    min-height: 457px;
     width: fit-content;
     float:left;
-    background-color: var(--givry);
+    background-color: var(--char);
+    padding-top: 15px;
+    border-radius: 5px;
 }
 
 main {
@@ -58,10 +72,13 @@ main {
 #weatherBox {
     float: center;
     font-size: 36px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     background-color: var(--swan);
+    height: fit-content;
     border-radius: 5px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
 }
 
 #futureBox .card {
@@ -72,6 +89,9 @@ button {
     padding: 5px;
 }
 
+ul {
+    list-style-type: none;
+}
 
 @media screen and (max-width: 1153px) {
     main {
@@ -94,5 +114,9 @@ button {
 @media screen and (max-width: 529px) {
     main {
         width: 50%;
+    }
+
+    #weatherBox {
+        font-size: 16px;
     }
 }
